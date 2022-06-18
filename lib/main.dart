@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -48,6 +50,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  Future getDocIds() async {
+    await FirebaseFirestore.instance.collection('home_card').get().then(
+      (snapshot)=>snapshot.docs.forEach((element){
+        print(element.reference);
+      }),
+   );
+  }
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -63,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    getDocIds();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
