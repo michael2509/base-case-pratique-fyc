@@ -1,16 +1,6 @@
-import 'dart:ui';
-
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter_application_1/pages/home.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   runApp(const MyApp());
 }
 
@@ -57,185 +47,69 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class Image {
-  late String image;
-  late String name;
-
-  Image({
-    required this.image,
-    required this.name,
-  });
-  
-  static Map<String, dynamic> from(Object? value) {
-    if (value == null) return {};
-    if (value is Image) return from(value.toJson());
-    if (value is Map) {
-      return {
-        'image': value['image'],
-        'name': value['name'],
-      };
-    }
-    throw Exception('Invalid object type: ${value.runtimeType}');
-  }
-  
-  Object? toJson() {
-    return {
-      'image': image,
-      'name': name,
-    };
-  }
-}
-
 class _MyHomePageState extends State<MyHomePage> {
-  final _database = FirebaseDatabase.instance.ref();
-  List<Map<String, dynamic>> list = [];
+  int _counter = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    showData();
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
   }
 
-  showData() async {
-    var i = 0;
-    var index = 0;
-    while (i == 0) {
-      final snapshot = await _database.child("home_card/$index").get();
-      if (snapshot.exists) {
-        print(snapshot.value);
-        list.add(Image.from(snapshot.value));
-        index++;
-      } else {
-        print("No data");
-        i++;
-      }
-    }
-
-    /*_database.child("home_card").onValue.listen((event) {
-      final list2 = event.snapshot.value;
-      setState(() {
-        list = list2;
-        print(list.runtimeType);
-      });
-    });*/
-  }
-  //item = event.snapshot.value;
-
-  //return item;
-
-  //List<Image> images = [];
-
-  List<Image> data = [
-    Image(
-      name: "image 1",
-      image:
-          "https://cdn.dribbble.com/users/3281732/screenshots/8159457/media/9e7bfb83b0bd704e941baa7a44282b22.jpg?compress=1&resize=600x600",
-    ),
-    Image(
-      name: "image 2",
-      image:
-          "https://cdn.dribbble.com/users/3281732/screenshots/7012328/media/bcd672685071ca4da27d5f3ea44ac5db.jpg?compress=1&resize=600x600",
-    ),
-    Image(
-      name: "image 3",
-      image:
-          "https://cdn.dribbble.com/users/3281732/screenshots/6727912/samji_illustrator.jpeg?compress=1&resize=600x600",
-    ),
-    Image(
-      name: "image 4",
-      image:
-          "https://cdn.dribbble.com/users/3281732/screenshots/10940512/media/b2a8ea95c550e5f09d0ca07682a3c0da.jpg?compress=1&resize=600x600",
-    ),
-    Image(
-      name: "image 5",
-      image:
-          "https://cdn.dribbble.com/users/3281732/screenshots/8616916/media/a7e39b15640f8883212421d134013e38.jpg?compress=1&resize=600x600",
-    ),
-    Image(
-      name: "image 6",
-      image:
-          "https://cdn.dribbble.com/users/3281732/screenshots/6590709/samji_illustrator.jpg?compress=1&resize=600x600",
-    ),
-  ];
-
-  int _currentPage = 0;
   @override
   Widget build(BuildContext context) {
-    //showData();
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        AnimatedSwitcher(
-          duration: Duration(milliseconds: 500),
-          child: Container(
-            key: ValueKey<String>(data[_currentPage].image),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(data[_currentPage].image),
-                fit: BoxFit.cover,
-              ),
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
+    return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
+      ),
+      body: Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Column(
+          // Column is also a layout widget. It takes a list of children and
+          // arranges them vertically. By default, it sizes itself to fit its
+          // children horizontally, and tries to be as tall as its parent.
+          //
+          // Invoke "debug painting" (press "p" in the console, choose the
+          // "Toggle Debug Paint" action from the Flutter Inspector in Android
+          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+          // to see the wireframe for each widget.
+          //
+          // Column has various properties to control how it sizes itself and
+          // how it positions its children. Here we use mainAxisAlignment to
+          // center the children vertically; the main axis here is the vertical
+          // axis because Columns are vertical (the cross axis would be
+          // horizontal).
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
             ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 15,
-                sigmaY: 15,
-              ),
-              child: Container(
-                color: Colors.black.withOpacity(0.2),
-              ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
             ),
-          ),
+          ],
         ),
-        FractionallySizedBox(
-          heightFactor: 0.7,
-          child: PageView.builder(
-            itemCount: data.length,
-            onPageChanged: (int page) {
-              setState(() {
-                _currentPage = page;
-              });
-            },
-            itemBuilder: (BuildContext context, int index) {
-              return FractionallySizedBox(
-                widthFactor: 0.8,
-                child: Container(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          height: 400,
-                        ),
-                        Text(
-                          list[_currentPage]['name'],
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              decoration: TextDecoration.none),
-                        ),
-                      ]),
-                  //margin: const EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(data[index].image),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(32),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        spreadRadius: 5,
-                        blurRadius: 10,
-                        offset: Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        )
-      ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
