@@ -1,6 +1,11 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/animeList.dart';
+import 'package:flutter_application_1/pages/heroesList.dart';
+import 'package:flutter_application_1/pages/starList.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,9 +19,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        primarySwatch: Colors.yellow,
+      ),
       title: 'Flutter Firebase',
       home: const HomePage(),
+      routes: {
+        '/home':(context) => HomePage(),
+        '/starList': (context) => StarList(),
+        '/animeList': (context) => AnimeList(),
+        '/heroesList': (context) => HeroesList(),
+        //'/carousel': (context) => AwesomeCarousel(),
+      },
     ); // MaterialAppI
   }
 }
@@ -25,17 +39,12 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Firebase'),
-      ),
-      body: HomeCardsInformations(), // AppBar
-    ); // Scaffold
+    return const Scaffold(body: HomeCardsInformations()); // Scaffold
   }
 }
 
 class HomeCardsInformations extends StatefulWidget {
-  HomeCardsInformations({Key? key}) : super(key: key);
+  const HomeCardsInformations({Key? key}) : super(key: key);
 
   @override
   State<HomeCardsInformations> createState() => _HomeCardsInformationsState();
@@ -74,20 +83,57 @@ class _HomeCardsInformationsState extends State<HomeCardsInformations> {
   }
 
   _buildStoryPage(Map data) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(data['image']),
-        ), // Decoration Image
-      ), // BoxDecoration
-      child: Center(
-        child: Text(
-          data['name'],
-          style: TextStyle(fontSize: 40, color: Colors.white),
-        ), // Text
-      ), // Center
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          child: Container(
+            key: ValueKey<String>(data['name']),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(data['image']),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 15,
+                sigmaY: 15,
+              ),
+              child: Container(
+                color: Colors.black.withOpacity(0.2),
+              ),
+            ),
+          ),
+        ),
+        FractionallySizedBox(
+            widthFactor: 0.9,
+            heightFactor: 0.7,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, data['route']);
+              },
+              child: Container(
+                margin: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(data['image']),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(32),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 5,
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+              ),
+            ))
+      ],
     );
   }
 }
