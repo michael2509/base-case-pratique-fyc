@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_application_1/models/result_card.dart';
 import 'package:flutter_application_1/models/tinder_card.dart';
-import 'package:flutter_swipable/flutter_swipable.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
+
+import '../ad_state.dart';
 
 class AnimeList extends StatefulWidget {
   const AnimeList({Key? key}) : super(key: key);
@@ -16,6 +19,24 @@ class _AnimeList extends State<AnimeList> {
       FirebaseFirestore.instance.collection('avatars').snapshots();
   List<TinderCard> card_list = [];
   List<Map<String, dynamic>> list = [];
+  late BannerAd banner;
+
+  /* @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final adState = Provider.of<AdState>(context);
+    adState.initialization.then((status) {
+      setState(() {
+        banner = BannerAd(
+            size: AdSize.banner,
+            adUnitId: adState.bannerAdUnitId,
+            request: const AdRequest(),
+            listener: adState.adListener)
+          ..load();
+      });
+    });
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,10 +45,6 @@ class _AnimeList extends State<AnimeList> {
               stream: _stream,
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
-                List? slideList = snapshot.data?.docs.map((doc) {
-                  return doc.data();
-                }).toList();
-
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }
@@ -35,21 +52,29 @@ class _AnimeList extends State<AnimeList> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Text('Loading...');
                 }
+
                 list.clear();
+                //print(snapshot.data!.docs);
                 snapshot.data!.docs.map((doc) {
                   list.add(doc.data()! as Map<String, dynamic>);
                 }).toList();
 
-                list.sort((a, b) => b['true'].compareTo(a['true']));
-
-                print(list);
+                //print(list);
 
                 list.map((item) {
                   card_list.add(TinderCard(
                     image: item['image'],
                     name: item['name'],
+                    profession: item['profession'],
+                    card_list: card_list,
+                    collection: "avatar_result",
                   ));
                 }).toList();
+                //print(card_list);
+
+                final result =
+                    FirebaseFirestore.instance.collection('avatar_result');
+
                 return Container(
                     child: Stack(
                   alignment: Alignment.center,
@@ -60,58 +85,28 @@ class _AnimeList extends State<AnimeList> {
                         /*Navigator.pushNamed(context, '/home');
                         Navigator.pushNamed(context, '/animeList');*/
                       },
-                      child: Container(
-                          height: 500,
-                          width: 300,
-                          child: Center(
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.purple[400]),
-                                height: 400,
-                                width: 300,
-                                //color: Colors.amber,
-                                child: ListView(
-                                  padding: const EdgeInsets.all(30),
-                                  children: <Widget>[
-                                    const Padding(
-                                      padding: EdgeInsets.only(bottom: 20),
-                                      child: Text(
-                                        "PODIUM",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    for (var _element in list)
-                                      if (list.indexOf(_element) < 3)
-                                        Container(
-                                          height: 50,
-                                          width: 100,
-                                          color: Colors.amber[(300 +
-                                                  list.indexOf(_element) * 100)
-                                              .toInt()],
-                                          child: Center(
-                                            child: Text(_element['name'] +
-                                                _element['true'].toString()),
-                                          ),
-                                        ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 20),
-                                      child: Column(
-                                        children: const [
-                                          Text("button1"),
-                                          Text("button2"),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                          )),
+                      child: const Result(),
                     ),
-                    //for (var element in card_list) element
+                    for (var element in card_list)
+                      GestureDetector(
+                        onDoubleTap: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                    title: Text(element.profession),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                            primary: Colors.green),
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'OK'),
+                                        child: const Text('OK'),
+                                      ),
+                                    ])),
+                        child: element,
+                      ),
+                    /*Container(
+                          
+                           child: AdWidget(ad: banner)),*/
                   ],
                 ));
               })),
