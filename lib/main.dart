@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ad_state.dart';
 import 'package:flutter_application_1/pages/animeList.dart';
 import 'package:flutter_application_1/pages/heroesList.dart';
-import 'package:flutter_application_1/pages/login.dart';
+import 'package:flutter_application_1/pages/login_register/login.dart';
 import 'package:flutter_application_1/pages/starList.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';

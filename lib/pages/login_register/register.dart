@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import '../home.dart';
+import 'login.dart';
 
-class Login extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,29 +45,7 @@ class _LoginState extends State<Login> {
                     hintText: 'Enter secure password'),
               ),
             ),
-            Padding(
-                padding: EdgeInsets.only(
-                    left: 25.0, right: 25.0, top: 15, bottom: 25),
-                child: SizedBox(
-                  height: 50,
-                  width: 250,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      //fixedSize: const Size(70, 70),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => HomeCardsInformations()));
-                    },
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(color: Colors.purple, fontSize: 25),
-                    ),
-                  ),
-                )),
+            
             SizedBox(
               height: 50,
               width: 250,
@@ -74,7 +53,12 @@ class _LoginState extends State<Login> {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => Login()));
+                    },
                 child: const Text(
                   'Register',
                   style: TextStyle(color: Colors.purple, fontSize: 25),
