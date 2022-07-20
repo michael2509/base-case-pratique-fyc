@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/result_card.dart';
 import 'package:flutter_application_1/models/tinder_card.dart';
@@ -93,7 +94,23 @@ class _HomeCardsInformationsState extends State<HomeCardsInformations> {
                   ],
                 ),
               ),
-            ))
+            )),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+              margin: const EdgeInsets.all(50),
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey,
+                    fixedSize: const Size(90, 100),
+                    shape: const CircleBorder(),
+                  ),
+                  child: const Text('SignOut'))),
+        )
       ],
     );
   }

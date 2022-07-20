@@ -11,6 +11,40 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool _validate = false;
+
+  Future signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      if (emailController.text.trim().isEmpty) {
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                    title: const Text("Le champ email ne peut être vide"),
+                    actions: <Widget>[
+                      TextButton(
+                        style: TextButton.styleFrom(primary: Colors.purple),
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text('OK'),
+                      ),
+                    ]));
+      } else {
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) =>
+                AlertDialog(title: Text(e.toString()), actions: <Widget>[
+                  TextButton(
+                    style: TextButton.styleFrom(primary: Colors.green),
+                    onPressed: () => Navigator.pop(context, 'OK'),
+                    child: const Text('OK'),
+                  ),
+                ]));
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -35,11 +69,13 @@ class _LoginState extends State<Login> {
               child: TextField(
                 controller: emailController,
                 decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                  hintText: 'Enter valid email id as abc@gmail.com',
+                  //errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                ),
               ),
             ),
             Padding(
@@ -57,7 +93,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                     left: 25.0, right: 25.0, top: 15, bottom: 25),
                 child: SizedBox(
                   height: 50,
@@ -68,10 +104,7 @@ class _LoginState extends State<Login> {
                       //fixedSize: const Size(70, 70),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => HomeCardsInformations()));
+                      signIn();
                     },
                     child: const Text(
                       'Login',
@@ -91,8 +124,8 @@ class _LoginState extends State<Login> {
                       context, MaterialPageRoute(builder: (_) => Register()));
                 },
                 child: const Text(
-                  'No Account ? Register',
-                  style: TextStyle(color: Colors.purple, fontSize: 20),
+                  "Pas de compte ?   Inscris toi !",
+                  style: TextStyle(color: Colors.purple, fontSize: 17),
                 ),
               ),
             ),
@@ -103,16 +136,10 @@ class _LoginState extends State<Login> {
               'Forgot Password',
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            )
+            ),
           ],
         ),
       ),
     );
-  }
-
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim());
   }
 }

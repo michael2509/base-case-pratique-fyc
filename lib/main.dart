@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ad_state.dart';
+import 'package:flutter_application_1/check_auth.dart';
 import 'package:flutter_application_1/pages/animeList.dart';
 import 'package:flutter_application_1/pages/heroesList.dart';
 import 'package:flutter_application_1/pages/login_register/login.dart';
@@ -30,10 +31,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Firebase',
       home: const HomePage(),
       routes: {
-        '/home':(context) => HomePage(),
-        '/starList': (context) => StarList(),
-        '/animeList': (context) => AnimeList(),
-        '/heroesList': (context) => HeroesList(),
+        '/home':(context) => const HomePage(),
+        '/starList': (context) => const StarList(),
+        '/animeList': (context) => const AnimeList(),
+        '/heroesList': (context) => const HeroesList(),
         //'/carousel': (context) => AwesomeCarousel(),
       },
     ); // MaterialAppI
@@ -44,6 +45,6 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Login()); // Scaffold
+    return  Scaffold(body: Check()); // Scaffold
   }
 }

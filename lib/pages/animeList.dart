@@ -70,10 +70,6 @@ class _AnimeList extends State<AnimeList> {
                     collection: "avatar_result",
                   ));
                 }).toList();
-                //print(card_list);
-
-                final result =
-                    FirebaseFirestore.instance.collection('avatar_result');
 
                 return Container(
                     child: Stack(
