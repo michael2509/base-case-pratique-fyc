@@ -25,16 +25,9 @@ class TinderCard extends StatelessWidget {
         child: Center(
             child: Swipable(
           onSwipeRight: (finalPosition) {
-            //print('right');
             doc.update({'true': FieldValue.increment(1)});
-            //card_list.removeWhere((item) => item.name == name);
-            //print(card_list);
           },
           onSwipeLeft: (finalPosition) {
-            //print('left');
-            //doc.update({'false': FieldValue.increment(1)});
-            //card_list.removeWhere((item) => item.name == name);
-            //print(card_list);
           },
           child: Container(
               decoration: BoxDecoration(

@@ -5,7 +5,7 @@ import 'package:flutter_application_1/models/tinder_card.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
-import '../ad_state.dart';
+import '../../ad_state.dart';
 
 class AnimeList extends StatefulWidget {
   const AnimeList({Key? key}) : super(key: key);
@@ -16,12 +16,12 @@ class AnimeList extends StatefulWidget {
 
 class _AnimeList extends State<AnimeList> {
   final Stream<QuerySnapshot> _stream =
-      FirebaseFirestore.instance.collection('avatars').snapshots();
+      FirebaseFirestore.instance.collection('animes').snapshots();
   List<TinderCard> card_list = [];
   List<Map<String, dynamic>> list = [];
   late BannerAd banner;
 
-  /* @override
+   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final adState = Provider.of<AdState>(context);
@@ -35,7 +35,7 @@ class _AnimeList extends State<AnimeList> {
           ..load();
       });
     });
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class _AnimeList extends State<AnimeList> {
                     name: item['name'],
                     profession: item['profession'],
                     card_list: card_list,
-                    collection: "avatar_result",
+                    collection: "animes_result",
                   ));
                 }).toList();
 
@@ -81,7 +81,7 @@ class _AnimeList extends State<AnimeList> {
                         /*Navigator.pushNamed(context, '/home');
                         Navigator.pushNamed(context, '/animeList');*/
                       },
-                      child: const Result(),
+                      child: Result( collection: 'animes_result'),
                     ),
                     for (var element in card_list)
                       GestureDetector(
@@ -100,12 +100,17 @@ class _AnimeList extends State<AnimeList> {
                                     ])),
                         child: element,
                       ),
-                    /*Container(
-                          
-                           child: AdWidget(ad: banner)),*/
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SizedBox(
+                        width: 320, height: 100,
+                        child: AdWidget(ad: banner),
+                      ),
+                    )
                   ],
                 ));
               })),
     );
   }
+
 }

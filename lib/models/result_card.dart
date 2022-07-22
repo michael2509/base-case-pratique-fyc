@@ -1,21 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Result extends StatefulWidget {
-  const Result({Key? key}) : super(key: key);
-
-  @override
-  State<Result> createState() => _ResultState();
-}
-
-class _ResultState extends State<Result> {
-  final Stream<QuerySnapshot> _stream =
-      FirebaseFirestore.instance.collection('avatar_result').snapshots();
-
-  List<Map<String, dynamic>> list = [];
+class Result extends StatelessWidget {
+  final collection;
+  Result({required this.collection});
 
   @override
   Widget build(BuildContext context) {
+    final Stream<QuerySnapshot> _stream =
+        FirebaseFirestore.instance.collection(collection).snapshots();
+
+    List<Map<String, dynamic>> list = [];
     return StreamBuilder(
         stream: _stream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -66,16 +61,33 @@ class _ResultState extends State<Result> {
                               color: Colors.amber[
                                   (300 + list.indexOf(_element) * 100).toInt()],
                               child: Center(
-                                child: Text(_element['name'] + " " +
+                                child: Text(_element['name'] +
+                                    " " +
                                     _element['true'].toString()),
                               ),
                             ),
                         Padding(
-                          padding: EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(top: 30),
                           child: Column(
-                            children: const [
-                              Text("button1 result"),
-                              Text("button2 result"),
+                            children: [
+                              const Text(
+                                "Double tap pour recommencer ou",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.grey,
+                                        fixedSize: const Size(80, 70),
+                                        shape: const CircleBorder(),
+                                      ),
+                                      child: Icon(Icons.home))),
                             ],
                           ),
                         ),

@@ -75,6 +75,7 @@ class _HomeCardsInformationsState extends State<HomeCardsInformations> {
             child: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, data['route']);
+                print("data['name'], ${data['name']}");
               },
               child: Container(
                 margin: const EdgeInsets.all(16),
@@ -95,22 +96,23 @@ class _HomeCardsInformationsState extends State<HomeCardsInformations> {
                 ),
               ),
             )),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-              margin: const EdgeInsets.all(50),
-              width: double.infinity,
-              child: ElevatedButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.grey,
-                    fixedSize: const Size(90, 100),
-                    shape: const CircleBorder(),
-                  ),
-                  child: const Text('SignOut'))),
-        )
+        if (data['name'] == 'Anime List')
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+                margin: const EdgeInsets.all(50),
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.grey,
+                      fixedSize: const Size(90, 100),
+                      shape: const CircleBorder(),
+                    ),
+                    child: const Text('SignOut'))),
+          )
       ],
     );
   }

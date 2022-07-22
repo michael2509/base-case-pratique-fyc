@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ad_state.dart';
 import 'package:flutter_application_1/check_auth.dart';
-import 'package:flutter_application_1/pages/animeList.dart';
-import 'package:flutter_application_1/pages/heroesList.dart';
-import 'package:flutter_application_1/pages/login_register/login.dart';
-import 'package:flutter_application_1/pages/starList.dart';
+import 'package:flutter_application_1/pages/lists/animeList.dart';
+import 'package:flutter_application_1/pages/lists/heroesList.dart';
+import 'package:flutter_application_1/pages/lists/rapList.dart';
+import 'package:flutter_application_1/pages/lists/starList.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/starList': (context) => const StarList(),
         '/animeList': (context) => const AnimeList(),
         '/heroesList': (context) => const HeroesList(),
+        '/rapfr':(context) => const RapList(),
         //'/carousel': (context) => AwesomeCarousel(),
       },
     ); // MaterialAppI
