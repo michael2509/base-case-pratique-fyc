@@ -67,7 +67,7 @@ class _HeroesList extends State<HeroesList> {
                     name: item['name'],
                     profession: item['profession'],
                     card_list: card_list,
-                    collection: "avatar_result",
+                    collection: "heroes_result",
                   ));
                 }).toList();
 
@@ -79,7 +79,7 @@ class _HeroesList extends State<HeroesList> {
                       onDoubleTap: () {
                         setState(() {});
                       },
-                      child: Result( collection: 'avatar_result'),
+                      child: Result( collection: 'heroes_result'),
                     ),
                     for (var element in card_list)
                       GestureDetector(

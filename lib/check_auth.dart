@@ -9,18 +9,6 @@ class Check extends StatelessWidget {
   final fb = FirebaseDatabase.instance;
 
   @override
-  void initState() async {
-    print("initState");
-    final ref = fb.ref().child('users');
-    final snapshot = await ref.get();
-    if (snapshot.exists) {
-      print(snapshot.value);
-    } else {
-      print('No data available.');
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     
     return Scaffold(

@@ -57,7 +57,6 @@ class _RegisterState extends State<Register> {
       final data = event.snapshot.value as List;
       id = data.length+1;
     });
-    print(id);
     var ref2 = fb.ref().child('users/');
 
     if (passwordController.text != confirmPasswordController.text) {
@@ -111,9 +110,6 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    final ref = fb.ref().child('users');
-    print(ref);
-
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SingleChildScrollView(

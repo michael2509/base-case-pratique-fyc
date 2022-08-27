@@ -10,7 +10,43 @@
       "client_info": {
         "mobilesdk_app_id": "1:391922944553:android:954479a2b5e7c1a00daa38",
         "android_client_info": {
-          "package_name": "com.sidox.flutter_application_1"
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391922944553-3r1p450pgbhglg85jsddsauqs6295ngf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyMdcpWCi6CETmdL8bwzmPPWVydDQUtys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391922944553-3r1p450pgbhglg85jsddsauqs6295ngf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "391922944553-22am36st2ndiji6rr68pavs8h1ld6hm6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sidox.sw2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391922944553:android:6eef9a3c8e3c29090daa38",
+        "android_client_info": {
+          "package_name": "com.sidox.starwoke"
         }
       },
       "oauth_client": [

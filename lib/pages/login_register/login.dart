@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/login_register/delete.dart';
 import 'package:flutter_application_1/pages/login_register/register.dart';
+import 'package:flutter_application_1/pages/login_register/reset.dart';
 import '../home.dart';
 
 class Login extends StatefulWidget {
@@ -132,10 +134,47 @@ class _LoginState extends State<Login> {
             const SizedBox(
               height: 60,
             ),
-            const Text(
-              'Forgot Password',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            GestureDetector(
+              onDoubleTap: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                          title: Text("Reset le mot de passe"),
+                          actions: <Widget>[
+                            ResetPassword(),
+                          ])),
+              onTap: () {
+                print("Mot de passe oublié");
+              },
+              child: const Text(
+                'Mot de passe oublié ?',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onDoubleTap: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                          title: Text("formulaire suppression compte"),
+                          actions: <Widget>[
+                            DeleteUser(),
+                          ])),
+              onTap: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                          title: Text("formulaire suppression compte"),
+                          actions: <Widget>[
+                            DeleteUser(),
+                          ])),
+              child: const Text(
+                'Supprimer ton compte ? 😔',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),

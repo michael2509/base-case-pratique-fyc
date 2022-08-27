@@ -2,8 +2,6 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/result_card.dart';
-import 'package:flutter_application_1/models/tinder_card.dart';
 
 class HomeCardsInformations extends StatefulWidget {
   const HomeCardsInformations({Key? key}) : super(key: key);
