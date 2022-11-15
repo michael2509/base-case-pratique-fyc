@@ -5,8 +5,6 @@ import 'package:flutter_application_1/models/tinder_card.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
-import '../../ad_state.dart';
-
 class AnimeList extends StatefulWidget {
   const AnimeList({Key? key}) : super(key: key);
 
@@ -19,23 +17,6 @@ class _AnimeList extends State<AnimeList> {
       FirebaseFirestore.instance.collection('animes').snapshots();
   List<TinderCard> card_list = [];
   List<Map<String, dynamic>> list = [];
-  late BannerAd banner;
-
-   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final adState = Provider.of<AdState>(context);
-    adState.initialization.then((status) {
-      setState(() {
-        banner = BannerAd(
-            size: AdSize.banner,
-            adUnitId: adState.bannerAdUnitId,
-            request: const AdRequest(),
-            listener: adState.adListener)
-          ..load();
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +46,7 @@ class _AnimeList extends State<AnimeList> {
                   card_list.add(TinderCard(
                     image: item['image'],
                     name: item['name'],
-                    profession: item['profession'],
+                    profession: item['infos'],
                     card_list: card_list,
                     collection: "animes_result",
                   ));
@@ -78,10 +59,9 @@ class _AnimeList extends State<AnimeList> {
                     GestureDetector(
                       onDoubleTap: () {
                         setState(() {});
-                        /*Navigator.pushNamed(context, '/home');
-                        Navigator.pushNamed(context, '/animeList');*/
+                        Navigator.pushNamed(context, '/home');
                       },
-                      child: Result( collection: 'animes_result'),
+                      child: Result(collection: 'animes_result'),
                     ),
                     for (var element in card_list)
                       GestureDetector(
@@ -100,17 +80,9 @@ class _AnimeList extends State<AnimeList> {
                                     ])),
                         child: element,
                       ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        width: 320, height: 100,
-                        child: AdWidget(ad: banner),
-                      ),
-                    )
                   ],
                 ));
               })),
     );
   }
-
 }

@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ad_state.dart';
 import 'package:flutter_application_1/check_auth.dart';
 import 'package:flutter_application_1/pages/lists/animeList.dart';
-import 'package:flutter_application_1/pages/lists/heroesList.dart';
-import 'package:flutter_application_1/pages/lists/rapList.dart';
-import 'package:flutter_application_1/pages/lists/starList.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
@@ -31,12 +28,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Firebase',
       home: const HomePage(),
       routes: {
-        '/home':(context) => const HomePage(),
-        '/starList': (context) => const StarList(),
-        '/animeList': (context) => const AnimeList(),
-        '/heroesList': (context) => const HeroesList(),
-        '/rapfr':(context) => const RapList(),
-        //'/carousel': (context) => AwesomeCarousel(),
+        '/home': (context) => const HomePage(),
+        '/animeList': (context) => const AnimeList()
       },
     ); // MaterialAppI
   }

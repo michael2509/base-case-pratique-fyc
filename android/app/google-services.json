@@ -1,9 +1,9 @@
 {
   "project_info": {
-    "project_number": "391922944553",
-    "firebase_url": "https://starwoke-7318e.firebaseio.com",
-    "project_id": "starwoke-7318e",
-    "storage_bucket": "starwoke-7318e.appspot.com"
+    "project_number": "66314918939",
+    "firebase_url": "https://sw-flutter-ed828-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "sw-flutter-ed828",
+    "storage_bucket": "sw-flutter-ed828.appspot.com"
   },
   "client": [
     {
@@ -68,10 +68,10 @@
               "client_type": 3
             },
             {
-              "client_id": "391922944553-22am36st2ndiji6rr68pavs8h1ld6hm6.apps.googleusercontent.com",
+              "client_id": "66314918939-vvjhav1bm2j3pk8elf0egd8mpjs0q5ae.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.sidox.sw2"
+                "bundle_id": "com.sidox.starwoke"
               }
             }
           ]
