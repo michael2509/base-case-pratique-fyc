@@ -26,7 +26,7 @@ class Result extends StatelessWidget {
           snapshot.data!.docs.map((doc) {
             list.add(doc.data()! as Map<String, dynamic>);
           }).toList();
-          list.sort((a, b) => b['true']!.compareTo(a['true']!));
+          list.sort((a, b) => b['like']!.compareTo(a['like']!));
 
           return Container(
               height: 500,
@@ -63,7 +63,7 @@ class Result extends StatelessWidget {
                               child: Center(
                                 child: Text(_element['name'] +
                                     " " +
-                                    _element['true'].toString()),
+                                    _element['like'].toString()),
                               ),
                             ),
                         Padding(
