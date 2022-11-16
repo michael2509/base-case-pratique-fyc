@@ -25,10 +25,9 @@ class TinderCard extends StatelessWidget {
         child: Center(
             child: Swipable(
           onSwipeRight: (finalPosition) {
-            doc.update({'true': FieldValue.increment(1)});
+            doc.update({'like': FieldValue.increment(1)});
           },
-          onSwipeLeft: (finalPosition) {
-          },
+          onSwipeLeft: (finalPosition) {},
           child: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
